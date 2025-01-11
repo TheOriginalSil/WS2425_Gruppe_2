@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import de.hka.ws2425.MainActivity;
 import de.hka.ws2425.api.RandomJoke;
 import de.hka.ws2425.ui.map.MapFragment;
 import de.hka.ws2425.R;
@@ -65,29 +66,6 @@ public class MainFragment extends Fragment {
             public void onChanged(String s) {
                 txtMessage.setText(s);
             }
-        });
-
-        // WebService
-        Button btnGetRandomJoke = this.getView().findViewById(R.id.btn_get_random_joke);
-        btnGetRandomJoke.setOnClickListener(view -> this.mViewModel.requestRandomJoke());
-
-        TextView txtJokeSetup = this.getView().findViewById(R.id.txt_joke_setup);
-        TextView txtJokePunchline = this.getView().findViewById(R.id.txt_joke_punchline);
-
-        mViewModel.getRandomJokeResponse().observe(this.getViewLifecycleOwner(), new Observer<RandomJoke>() {
-            @Override
-            public void onChanged(RandomJoke randomJoke) {
-                txtJokeSetup.setText(randomJoke.getSetup());
-                txtJokePunchline.setText(randomJoke.getPunchline());
-            }
-        });
-
-        // MQTT-Broker
-        Button btnSendMqttMessage = this.getView().findViewById(R.id.btn_send_mqtt_message);
-        EditText edtMqttMessage = this.getView().findViewById(R.id.edt_mqtt_message);
-
-        btnSendMqttMessage.setOnClickListener(view -> {
-            this.mViewModel.sendMqttMessage("hka/test/app/message", edtMqttMessage.getText().toString());
         });
     }
 }
